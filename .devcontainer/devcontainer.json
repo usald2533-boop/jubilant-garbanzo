@@ -1,0 +1,21 @@
+{
+  "name": "OpenCode Environment",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "OpenCode Web",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postCreateCommand": "sudo apt-get update -qq && sudo apt-get install -y -qq xdg-utils && curl -fsSL https://opencode.ai/install | bash",
+  "postStartCommand": "export PATH=\"$HOME/.opencode/bin:$PATH\" && nohup opencode web --port 3000 --hostname 0.0.0.0 > /tmp/opencode.log 2>&1 &"
+}
